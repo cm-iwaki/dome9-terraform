@@ -90,48 +90,6 @@ data "aws_iam_policy_document" "dome9-write-policy" {
   }
 }
 
-resource "aws_iam_policy" "dome9-iam-policy" {
-  description = "dome9-iam-policy"
-  name        = "dome9-iam-policy"
-  path        = "/"
-  policy      = data.aws_iam_policy_document.dome9-iam-policy.json
-}
-
-data "aws_iam_policy_document" "dome9-iam-policy" {
-  statement {
-    sid = "Dome9IAMConnectRead"
-    actions = [
-      "iam:Get*",
-      "iam:List*"
-    ]
-    effect    = "Allow"
-    resources = ["*"]
-  }
-  statement {
-    sid = "Dome9IAMConnectRoles"
-    actions = [
-      "iam:AttachRolePolicy",
-      "iam:DetachRolePolicy"
-    ]
-    condition {
-      test     = "ArnEquals"
-      variable = "iam:PolicyArn"
-      values   = [aws_iam_policy.dome9-restricted-policy.arn]
-    }
-    effect    = "Allow"
-    resources = ["*"]
-  }
-  statement {
-    sid = "Dome9IAMConnectUserGroup"
-    actions = [
-      "iam:AddUserToGroup",
-      "iam:RemoveUserFromGroup"
-    ]
-    effect    = "Allow"
-    resources = [aws_iam_group.dome9-restricted-group.arn]
-  }
-}
-
 resource "aws_iam_role_policy_attachment" "dome9-readonly-policy" {
   policy_arn = aws_iam_policy.dome9-readonly-policy.arn
   role       = aws_iam_role.dome9-connect.name
