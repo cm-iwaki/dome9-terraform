@@ -11,6 +11,9 @@ terraform {
   }
 }
 
+variable "access_id" {}
+variable "secret_key" {}
+
 provider "dome9" {
   dome9_access_id  = var.access_id
   dome9_secret_key = var.secret_key

@@ -8,7 +8,7 @@ data "terraform_remote_state" "aws" {
   }
 }
 
-resource "dome9_cloudaccount_aws" "this" {
+resource "dome9_cloudaccount_aws" "dome9" {
   name = "dome9"
 
   credentials {
